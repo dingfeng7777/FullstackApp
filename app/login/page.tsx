@@ -19,18 +19,17 @@ const LoginPage = () => {
     name="login"
     onFinish={onFinish}>
     <Form.Item
-      label="Username"
+    //   label="Username"
       name="username"
       rules={[{ required: true, message: 'Please input your username!' }]}
     >
-      <Input prefix={<UserOutlined />}/>
+      <Input prefix={<UserOutlined />} placeholder='Username'/>
     </Form.Item>
     <Form.Item
-      label="Password"
       name="password"
       rules={[{ required: true, message: 'Please input your password!' }]}
     >
-      <Input.Password prefix={<LockOutlined  />}/>
+      <Input.Password prefix={<LockOutlined  />} placeholder='Password'/>
     </Form.Item>
     </Form>
     </div>
