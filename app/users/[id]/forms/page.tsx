@@ -29,7 +29,7 @@ interface formValues {
   totalStudent: number,
   comment?: string | undefined
 }
-const formsPage = () => {
+const FormsPage = () => {
   const [forms, setForms] = useState(initialData);
   const columns = [
     {
@@ -133,4 +133,4 @@ const formsPage = () => {
   )
 }
 
-export default formsPage
+export default FormsPage

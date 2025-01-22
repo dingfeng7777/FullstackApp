@@ -1,22 +1,21 @@
 import mongoose from "mongoose";
-declare global {
-    var mongoose: any;
-}
 
-const MONGODB_URI =
-    "mongodb+srv://dingfeng7777:19951106Df@#$@userinfo.5yd0u.mongodb.net/?retryWrites=true&w=majority&appName=UserInfo"
+const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
-    throw new Error(
-        "Please define the MONGODB_URI environment variable inside .env.local"
-    );
+    throw new Error("Please define the MONGODB_URI environment variable in .env.local");
 }
 
-let cached = global.mongoose;
-
-if (!cached) {
-    cached = global.mongoose = { conn: null, promise: null };
+interface MongooseGlobal {
+    conn: mongoose.Connection | null;
+    promise: Promise<mongoose.Connection> | null;
 }
+
+declare global {
+    var mongoose: MongooseGlobal | undefined;
+}
+
+const cached = global.mongoose || (global.mongoose = { conn: null, promise: null });
 
 async function dbConnect() {
     if (cached.conn) {
@@ -24,16 +23,16 @@ async function dbConnect() {
     }
 
     if (!cached.promise) {
-        const opts = {
+        const options = {
             bufferCommands: false,
         };
 
-        cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-            return mongoose;
+        cached.promise = mongoose.connect(MONGODB_URI as string, options).then((mongoose) => {
+            return mongoose.connection;
         });
     }
+
     cached.conn = await cached.promise;
-    console.log("Connected");
     return cached.conn;
 }
 
