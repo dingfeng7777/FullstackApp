@@ -22,6 +22,7 @@ const SignupPage = () => {
       const res = await axios.post("/api/auth/register", values);
       router.push(`/user/${res.data.userId}/info?new=true`)
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     catch (error) {
       message.error("Registration failed");
     }

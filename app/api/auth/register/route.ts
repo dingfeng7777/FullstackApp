@@ -21,6 +21,15 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ message: 'User created successfully!', userId: newUser._id }, { status: 201 })
     }
     catch (error) {
-        return NextResponse.json({ error: 'Error in creating new user!' }, { status: 500 })
+        let errorMessage = "Unknown error";
+
+        if (error instanceof Error) {
+            errorMessage = error.message;
+        }
+
+        return NextResponse.json(
+            { error: 'Error in creating new user!', details: errorMessage },
+            { status: 500 }
+        );
     }
 }

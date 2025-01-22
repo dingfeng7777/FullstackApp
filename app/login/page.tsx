@@ -20,6 +20,7 @@ const LoginPage = () => {
     try {
       const response = await axios.post("/api/auth/login", values);
       router.push(`/user/${response.data.userId}/info?new=false`);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       message.error("Invalid username or password");
     } finally {
